@@ -5,7 +5,7 @@ require "rack-flash"
 class App < Sinatra::Application
   def initialize
     super
-    @database_connection = DatabaseConnection.establish(ENV["RACK_ENV"])
+    @users_table = UsersTable.new(GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"]))
   end
 
   get "/" do
