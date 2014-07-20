@@ -1,6 +1,6 @@
 require "sinatra"
-require "active_record"
-require "./lib/database_connection"
+require "gschool_database_connection"
+require "rack-flash"
 
 class App < Sinatra::Application
   def initialize
@@ -9,6 +9,18 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    "Hello"
+    erb :root
+  end
+
+  get "/register" do
+    erb :register
+  end
+
+  post "/register" do
+    @database_connection.sql "(INSERT into users (username, password) params[:username]
+  values ('#{params[:username]}','#{params[:password]}')"
+    flash[:notice] = "Thank you for registering!"
+    redirect "/"
   end
 end
+
